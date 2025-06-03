@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-    runs-on: ubuntu-latest
+    runs-on: github-hosted
     name: get-secret
     steps:
       - name: Import Secrets
