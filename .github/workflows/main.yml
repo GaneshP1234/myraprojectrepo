@@ -16,7 +16,7 @@ jobs:
       - name: Troubleshooting_1
         run: |
             curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | \
-            jq "{ jwt: .value, role: \"auth.jwt.app1.workflow1_role2\" }" > ./token.json
+            jq "{ jwt: .value, role: \"auth.jwt.app1.workflow1_role\" }" > ./token.json
               
             echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN = [$ACTIONS_ID_TOKEN_REQUEST_TOKEN] and ACTIONS_ID_TOKEN_REQUEST_URL = [$ACTIONS_ID_TOKEN_REQUEST_URL]"
             echo 'GitHub Actions Token Claims'
@@ -34,7 +34,7 @@ jobs:
         with:
           url: https://ra-vault-cluster-public-vault-193294ff.3b9e56d2.z1.hashicorp.cloud:8200
           path: jwt-github-actions
-          role: auth.jwt.app1.workflow1_role2
+          role: auth.jwt.app1.workflow1_role
           method : jwt
           exportToken: true
           exportEnv: true
