@@ -13,6 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     name: get-secret
     steps:
+      - name: Troubleshooting_1
+        run: |
+            curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | \
+            jq "{ jwt: .value, role: \"auth.jwt.app1.workflow1_role\" }" > ./token.json
+              
+            echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN = [$ACTIONS_ID_TOKEN_REQUEST_TOKEN] and ACTIONS_ID_TOKEN_REQUEST_URL = [$ACTIONS_ID_TOKEN_REQUEST_URL]"
+            echo 'GitHub Actions Token Claims'
+            cat ./token.json | jq -r '.jwt | split(".") | .[1] | @base64d' | jq
+            cat ./token.json
+            curl -i -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" --data @token.json https://reqbin.netlify.app/.netlify/functions/reqbin
+            echo 'Vault Login Response'
+            curl -sSLf -X POST -H "Content-Type: application/json" -H "X-Vault-Namespace: admin" --data @token.json https://ra-vault-cluster-public-vault-193294ff.3b9e56d2.z1.hashicorp.cloud:8200/v1/auth/auth_jwt/login
+            
+            # Remove the token file when we're done (if we don't fail )
+            rm ./token.json
+            
       - name: Import Secrets
         id: import-secrets
         uses: hashicorp/vault-action@v3.3.0
