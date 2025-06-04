@@ -28,7 +28,6 @@ jobs:
             
             # Remove the token file when we're done (if we don't fail )
             rm ./token.json
-            
       - name: Import Secrets
         id: import-secrets
         uses: hashicorp/vault-action@v3.3.0
