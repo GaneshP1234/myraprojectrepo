@@ -32,7 +32,7 @@ jobs:
       - name: Export JSON File
         run: |
           # Example: Move the file to another location or make it available for download
-          mv secrets.json C:\HashiCorp
+          cat secrets.json
       - name: Import Secrets
         id: import-secrets
         uses: hashicorp/vault-action@v3.3.0
