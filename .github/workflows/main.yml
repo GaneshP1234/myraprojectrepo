@@ -29,6 +29,10 @@ jobs:
             
             # Remove the token file when we're done (if we don't fail )
             rm ./token.json
+      - name: Export JSON File
+        run: |
+          # Example: Move the file to another location or make it available for download
+          mv secrets.json C:\HashiCorp
       - name: Import Secrets
         id: import-secrets
         uses: hashicorp/vault-action@v3.3.0
