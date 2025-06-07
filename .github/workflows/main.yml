@@ -45,7 +45,7 @@ jobs:
           exportEnv: true
           namespace: admin
           secrets: |
-            myraproject/data/test secretkey | APPSECRET ;
+            myraproject/data/test ** | APPSECRET ;
       - name: Step following 'Import Secrets'
         run: |
           $APPSECRET = "${{ env.APPSECRET }}"
