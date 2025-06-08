@@ -50,5 +50,4 @@ jobs:
         run: |
           #echo '${{ toJson(steps.import-secrets.outputs) }}' > secrets.json
           #cat ./secrets.json
-          $SECRET = "${{ env.APPSECRET }}"
-          echo "Stored Output: $SECRET"
+          echo "{ APPSECRET: \"${{env.APPSECRET}}\" }"
