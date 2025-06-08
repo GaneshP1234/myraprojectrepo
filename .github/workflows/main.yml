@@ -45,10 +45,10 @@ jobs:
           exportEnv: true
           namespace: admin
           secrets: |
-            myraproject/data/test secretkey;
+            myraproject/data/test secretkey | APPSECRET ;
       - name: Step following 'Import Secrets'
         run: |
-          echo '${{ toJson(steps.import-secrets.outputs) }}' > secrets.json
-          cat ./secrets.json
-          #$APPSECRET = "${{ env.APPSECRET }}"
-          #echo "Stored Output: $APPSECRET"
+          #echo '${{ toJson(steps.import-secrets.outputs) }}' > secrets.json
+          #cat ./secrets.json
+          $SECRET = "${{ env.APPSECRET }}"
+          echo "Stored Output: $SECRET"
