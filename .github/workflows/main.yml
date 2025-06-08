@@ -48,6 +48,7 @@ jobs:
             myraproject/data/test secretkey | APPSECRET ;
       - name: Step following 'Import Secrets'
         run: |
-          #echo '${{ toJson(steps.import-secrets.outputs) }}'
-          $APPSECRET = "${{ env.APPSECRET }}"
-          echo "Stored Output: $APPSECRET"
+          echo '${{ toJson(steps.import-secrets.outputs) }}' > secrets.json
+          echo ./secrets.json
+          #$APPSECRET = "${{ env.APPSECRET }}"
+          #echo "Stored Output: $APPSECRET"
