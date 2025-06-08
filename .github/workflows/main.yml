@@ -48,10 +48,6 @@ jobs:
             myraproject/data/test secretkey | APPSECRET ;
       - name: Step following 'Import Secrets'
         run: |
-          echo '${{ toJson(steps.import-secrets.outputs) }}' > secrets.json
-          #$APPSECRET = "${{ env.APPSECRET }}"
-          #echo "Stored Output: $APPSECRET"
-      - name: Export JSON File
-        run: |
-          # Example: Move the file to another location or make it available for download
-          mv secrets.json C:\HashiCorp
+          #echo '${{ toJson(steps.import-secrets.outputs) }}'
+          $APPSECRET = "${{ env.APPSECRET }}"
+          echo "Stored Output: $APPSECRET"
