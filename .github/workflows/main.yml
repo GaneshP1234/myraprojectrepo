@@ -49,6 +49,6 @@ jobs:
       - name: Step following 'Import Secrets'
         run: |
           echo '${{ toJson(steps.import-secrets.outputs) }}' > secrets.json
-          echo ./secrets.json
+          cat ./secrets.json
           #$APPSECRET = "${{ env.APPSECRET }}"
           #echo "Stored Output: $APPSECRET"
